@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Cheese
 
-# Register your models here.
+# registering the Cheese Model to Admin
+admin.site.register(Cheese)
