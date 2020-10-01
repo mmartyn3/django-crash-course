@@ -25,3 +25,19 @@ class CheeseFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Cheese
+
+
+
+"""
+How to call the CheeseFactory Class in order to create 10 fake cheeses to test the UI
+
+python manage.py shell_plus
+
+In [1]: from everycheese.cheeses.tests.factories import CheeseFactory
+
+In [2]: for i in range(10):
+   ...:     CheeseFactory()
+   ...:
+
+In [3]: exit
+"""
