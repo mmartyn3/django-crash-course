@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Cheese
 
@@ -11,7 +12,7 @@ class CheeseDetailView(DetailView):
 
 # allowing users to create their own Cheese models via the UI
 # next step is to add the corresponding URL in cheeses/urls.py
-class CheeseCreateView(CreateView):
+class CheeseCreateView(LoginRequiredMixin, CreateView):
     model = Cheese
     fields = [
         'name',
