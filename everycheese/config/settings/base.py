@@ -81,6 +81,7 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "django_countries", # countries field in Cheese model
 ]
 
 LOCAL_APPS = [
