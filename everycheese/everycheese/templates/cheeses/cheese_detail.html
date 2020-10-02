@@ -6,6 +6,7 @@
 
 {% block content %}
   <h2>{{ cheese.name }}</h2>
+
   {% if cheese.firmness %}
     <p>Firmness: {{ cheese.get_firmness_display }}</p>
   {% endif %}
@@ -17,4 +18,14 @@
       <img src="{{ cheese.country_of_origin.flag }}" />
     </p>
   {% endif %}
+
+  <hr/>
+  <h3>
+    Creator: <a href="{% url 'users:detail' cheese.creator.username %}"></a>
+    {{ cheese.creator.username }}
+  </h3>
+  {% if cheese.creator.name %}
+    <p>{{ cheese.creator.name }}</p>
+  {% endif %}
+
 {% endblock content %}
