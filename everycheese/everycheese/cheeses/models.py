@@ -1,5 +1,6 @@
 from django.db import models
 
+from django_countries.fields import CountryField
 from autoslug import AutoSlugField
 from model_utils.models import TimeStampedModel
 
@@ -24,6 +25,10 @@ class Cheese(TimeStampedModel):
     name = models.CharField("Name of cheese", max_length=255)
     slug = AutoSlugField("Cheese Address",
         unique=True, always_update=False, populate_from="name")
+
+    # Using the third party Django app django-countries to make a country
+    # of origin field
+    country_of_origin = CountryField('Country of origin', blank=True)
 
     # A good rule of thumb is to use TextField rather than CharField whenever
     # there might be a need for more than 255 characters.

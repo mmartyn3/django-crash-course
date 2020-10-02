@@ -20,6 +20,8 @@ class CheeseFactory(factory.django.DjangoModelFactory):
         'paragraph', nb_sentences=3, variable_nb_sentences=True
     )
 
+    country_of_origin = factory.Faker('country_code')
+
     # randomly select a firmness from the list of options in cheeses/models.py
     firmness=factory.fuzzy.FuzzyChoice([x[0] for x in Cheese.Firmness.choices])
 
@@ -36,8 +38,9 @@ python manage.py shell_plus
 In [1]: from everycheese.cheeses.tests.factories import CheeseFactory
 
 In [2]: for i in range(10):
-   ...:     CheeseFactory()
-   ...:
+   ...:     CheeseFactory(name=f"Fake cheese {i}")
 
-In [3]: exit
+In [3]: Cheese.objects.all() # this will display all cheeses in the DB (or exit and head to /admin)
+
+In [4]: Cheese.objects.filter(name__startswith='Fake').delete() # delete all fake cheeses
 """
