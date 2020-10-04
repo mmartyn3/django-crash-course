@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
@@ -10,16 +11,6 @@ class Cheese(TimeStampedModel):
     """TimeStampedModel automatically gives the model 'created' and
     'modified' fields, which automatically track when the object is
     created or modified."""
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        """Required by CreateView.
-        Return absolute URL to the Cheese Detail page."""
-        return reverse(
-        'cheeses:detail', kwargs={"slug": self.slug}
-        )
 
     class Firmness(models.TextChoices):
         """Note that we defined the firmness constants as variables within
@@ -44,3 +35,19 @@ class Cheese(TimeStampedModel):
 
     firmness = models.CharField("Firmness", max_length=20,
         choices=Firmness.choices, default=Firmness.UNSPECIFIED)
+
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """Required by CreateView.
+        Return absolute URL to the Cheese Detail page."""
+        return reverse(
+        'cheeses:detail', kwargs={"slug": self.slug}
+        )
