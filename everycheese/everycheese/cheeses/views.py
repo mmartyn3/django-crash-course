@@ -1,4 +1,9 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView)
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Cheese
@@ -14,7 +19,7 @@ class CheeseDetailView(DetailView):
 # next step is to add the corresponding URL in cheeses/urls.py
 class CheeseCreateView(LoginRequiredMixin, CreateView):
     model = Cheese
-    fields = ['name', 'description', 'country_of_origin', 'firmness',]
+    fields = ['name','description','firmness','country_of_origin',]
 
     def form_valid(self, form):
         """Override the default form_valid method to insert creator field
@@ -23,3 +28,11 @@ class CheeseCreateView(LoginRequiredMixin, CreateView):
             a form input by the User."""
         form.instance.creator = self.request.user
         return super().form_valid(form)
+
+class CheeseUpdateView(LoginRequiredMixin, UpdateView):
+    """Class to update existing cheeses.
+    Next step is to wire in the URL pattern in cheeses/urls.py
+    """
+    model = Cheese
+    fields = ['name','description','firmness','country_of_origin',]
+    action = "Update"

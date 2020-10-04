@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Add Cheese{% endblock title %}
+{% block title %}
+  {{ view.action|default:"Add" }} Cheese
+{% endblock title %}
 
 {% block content %}
-  <h1>Add Cheese</h1>
-  <form action="{% url 'cheeses:add' %}" method="post">
-    {% csrf_token %}
-
-    <!-- to make forms look better use django-crispy-forms -->
-    <!-- by deafult it converts forms to use Bootstrap -->
-    <!-- replace the old {{ form.as_p }} with this... -->
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-warning">Save</button>
-  </form>
+  {% with action=view.action|default:"Add" %}
+    <h1>{{ action }} Cheese</h1>
+    <form method="post" action=".">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">{{ action }}</button>
+    </form>
+  {% endwith %}
 {% endblock content %}
